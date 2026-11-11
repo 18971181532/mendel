@@ -1,0 +1,66 @@
+name: tests
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  test:
+    name: ${{ matrix.os }} · py${{ matrix.python }}
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, macos-latest, windows-latest]
+        python: ["3.10", "3.11", "3.12", "3.13"]
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python }}
+
+      - name: Show the interpreter
+        run: python --version
+
+      - name: Unit tests
+        run: python run_tests.py
+
+      - name: CLI smoke test
+        run: |
+          python run.py --version
+          python run.py run examples/data/family.dl --stats
+          python run.py explain examples/data/family.dl 'ancestor("ada", "fay")'
+          python run.py why-not examples/data/family.dl 'ancestor("fay", "ada")'
+          python run.py impact examples/data/family.dl 'parent("bob", "dee")' --exact
+          python run.py plan examples/data/family.dl
+
+      - name: Demos assert their own numbers
+        run: python run_demos.py
+
+      - name: Benchmarks run
+        run: python run.py bench quick
+
+  package:
+    name: install from a wheel
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Build
+        run: |
+          python -m pip install --upgrade build
+          python -m build
+
+      - name: Install the wheel and use the entry point
+        run: |
+          python -m pip install dist/*.whl
+          cd /tmp
+          mendel --version
+          mendel run "$GITHUB_WORKSPACE/examples/data/family.dl" --goal 'ancestor("ada", ?y)'

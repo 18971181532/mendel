@@ -1,0 +1,9 @@
+# A diamond: ada reaches dee two ways, so dee has two proofs.
+
+parent("ada", "bob").
+parent("ada", "cy").
+parent("bob", "dee").
+parent("cy", "dee").
+
+ancestor(?x, ?y) :- parent(?x, ?y).
+@step ancestor(?x, ?z) :- parent(?x, ?y), ancestor(?y, ?z).

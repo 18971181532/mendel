@@ -1,0 +1,33 @@
+[build-system]
+requires = ["setuptools>=61"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "mendel-datalog"
+version = "1.0.0"
+description = "A Datalog engine that shows its work: derivation trees, incremental maintenance and why-not reports"
+readme = "README.md"
+requires-python = ">=3.10"
+license = { text = "MIT" }
+authors = [{ name = "遥か" }]
+keywords = ["datalog", "logic-programming", "provenance", "incremental-view-maintenance", "deductive-database"]
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
+    "License :: OSI Approved :: MIT License",
+    "Topic :: Database :: Database Engines/Servers",
+    "Topic :: Software Development :: Interpreters",
+]
+
+[project.urls]
+Homepage = "https://github.com/18971181532/mendel"
+Source = "https://github.com/18971181532/mendel"
+
+[project.scripts]
+mendel = "mendel.cli:main"
+
+[tool.setuptools]
+packages = ["mendel"]

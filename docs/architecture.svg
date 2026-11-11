@@ -1,0 +1,120 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1040 612" width="1040" height="612" role="img" aria-label="Mendel 架构：源文本经语法与静态检查进入半朴素求值，求值时记录的关系、支撑与反向边被三个追问共用，最后由命令行与基准套件暴露出来">
+  <title>Mendel · 一次求值，三次追问</title>
+  <style>
+    text { font-family: -apple-system, "Segoe UI", "PingFang SC", "Microsoft YaHei", sans-serif; }
+    .title { font-size: 20px; font-weight: 700; fill: #17202a; }
+    .sub { font-size: 12px; fill: #5a6a7a; }
+    .stage { font-size: 12px; font-weight: 700; fill: #8ba0b4; letter-spacing: 1px; }
+    .tag { font-size: 11px; font-weight: 700; fill: #2c6ca8; letter-spacing: .3px; }
+    .box-title { font-size: 13px; font-weight: 700; fill: #17202a; }
+    .box-body { font-size: 11px; fill: #46586b; }
+    .note { font-size: 11px; fill: #5a6a7a; }
+    .pill-title { font-size: 12px; font-weight: 700; fill: #17202a; }
+    .arrow { stroke: #8ba0b4; stroke-width: 1.6; fill: none; marker-end: url(#head); }
+    .bus { stroke: #8ba0b4; stroke-width: 1.6; fill: none; }
+  </style>
+  <defs>
+    <marker id="head" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto">
+      <path d="M0,0 L9,4.5 L0,9 z" fill="#8ba0b4"/>
+    </marker>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#fbfdff"/>
+      <stop offset="1" stop-color="#f2f7fb"/>
+    </linearGradient>
+  </defs>
+
+  <rect x="0" y="0" width="1040" height="612" rx="14" fill="url(#bg)" stroke="#d8e3ec"/>
+  <text class="title" x="32" y="40">Mendel · 一次求值，三次追问</text>
+  <text class="sub" x="32" y="62">能解释自己，不是因为多算了一遍，而是因为求值时顺手记下了「这条事实靠什么成立」</text>
+
+  <!-- 阶段标签 -->
+  <text class="stage" x="32" y="124">输入</text>
+  <text class="stage" x="32" y="220">前端</text>
+  <text class="stage" x="32" y="345">核心</text>
+  <text class="stage" x="32" y="472">追问</text>
+  <text class="stage" x="32" y="568">接口</text>
+
+  <!-- 1. 源文本 -->
+  <rect x="120" y="92" width="380" height="56" rx="10" fill="#ffffff" stroke="#c9d9e6"/>
+  <text class="tag" x="136" y="114">① 源文本 .dl</text>
+  <text class="box-body" x="136" y="134">事实 · 规则 · @标签 · not · 比较 · # 注释</text>
+  <text class="note" x="520" y="112">三种检查跑在构造器里：元数一致、变量安全、否定分层。</text>
+  <text class="note" x="520" y="132">不通过就不存在一个可以开始求值的 program。</text>
+
+  <!-- 2. 前端 -->
+  <rect x="120" y="178" width="380" height="76" rx="10" fill="#ffffff" stroke="#c9d9e6"/>
+  <rect x="120" y="178" width="380" height="26" rx="10" fill="#e8f1fa"/>
+  <rect x="120" y="194" width="380" height="10" fill="#e8f1fa"/>
+  <text class="tag" x="136" y="196">syntax.py</text>
+  <text class="box-title" x="136" y="222">词法 · AST · 递归下降</text>
+  <text class="box-body" x="136" y="242">?var / "str" / -3 / @label；报错带 行:列</text>
+
+  <rect x="520" y="178" width="488" height="76" rx="10" fill="#ffffff" stroke="#c9d9e6"/>
+  <rect x="520" y="178" width="488" height="26" rx="10" fill="#e8f1fa"/>
+  <rect x="520" y="194" width="488" height="10" fill="#e8f1fa"/>
+  <text class="tag" x="536" y="196">program.py</text>
+  <text class="box-title" x="536" y="222">元数 · 变量安全 · 分层否定 · 连接计划</text>
+  <text class="box-body" x="536" y="242">Tarjan SCC 排层；贪心顺序：已绑定参数 ↓，关系规模 ↑</text>
+
+  <!-- 3. 求值核心 -->
+  <rect x="120" y="286" width="888" height="110" rx="10" fill="#ffffff" stroke="#c9d9e6"/>
+  <rect x="120" y="286" width="888" height="28" rx="10" fill="#e8f1fa"/>
+  <rect x="120" y="300" width="888" height="14" fill="#e8f1fa"/>
+  <text class="tag" x="136" y="305">engine.py</text>
+  <text class="box-title" x="216" y="305">半朴素求值：按 SCC 拓扑序逐层饱和，delta 驱动</text>
+  <text class="box-body" x="1008" y="305" text-anchor="end">新事实写入时登记支撑</text>
+
+  <rect x="136" y="326" width="200" height="56" rx="8" fill="#f7fbfe" stroke="#d5e3ee"/>
+  <text class="pill-title" x="150" y="346">relation.py</text>
+  <text class="box-body" x="150" y="363">行集 + 惰性索引</text>
+  <text class="box-body" x="150" y="377">add O(1) · discard O(bucket)</text>
+
+  <rect x="352" y="326" width="200" height="56" rx="8" fill="#f7fbfe" stroke="#d5e3ee"/>
+  <text class="pill-title" x="366" y="346">Support</text>
+  <text class="box-body" x="366" y="363">规则 · 前提 · 缺失</text>
+  <text class="box-body" x="366" y="377">记下「检查过且不存在」</text>
+
+  <rect x="568" y="326" width="200" height="56" rx="8" fill="#f7fbfe" stroke="#d5e3ee"/>
+  <text class="pill-title" x="582" y="346">supporters</text>
+  <text class="box-body" x="582" y="363">前提 → 结论 反向边</text>
+  <text class="box-body" x="582" y="377">支撑闭包与影响分析</text>
+
+  <rect x="784" y="326" width="200" height="56" rx="8" fill="#f7fbfe" stroke="#d5e3ee"/>
+  <text class="pill-title" x="798" y="346">DRed</text>
+  <text class="box-body" x="798" y="363">过删 → 候选重推导</text>
+  <text class="box-body" x="798" y="377">成本 ∝ 受影响区域</text>
+
+  <!-- 4. 三个追问 -->
+  <rect x="120" y="430" width="280" height="76" rx="10" fill="#ffffff" stroke="#c9d9e6"/>
+  <text class="tag" x="136" y="452">explain</text>
+  <text class="box-title" x="136" y="474">推导树 · 替代证明</text>
+  <text class="box-body" x="136" y="494">沿着记下的支撑走，叶子是给定事实</text>
+
+  <rect x="424" y="430" width="280" height="76" rx="10" fill="#ffffff" stroke="#c9d9e6"/>
+  <text class="tag" x="440" y="452">impact</text>
+  <text class="box-title" x="440" y="474">撤回会带走谁</text>
+  <text class="box-body" x="440" y="494">反向边给上界，重建给精确值</text>
+
+  <rect x="728" y="430" width="280" height="76" rx="10" fill="#ffffff" stroke="#c9d9e6"/>
+  <text class="tag" x="744" y="452">why-not</text>
+  <text class="box-title" x="744" y="474">卡在哪一步</text>
+  <text class="box-body" x="744" y="494">第一个零扩展的文字 + 放松候选</text>
+
+  <!-- 5. 接口 -->
+  <rect x="120" y="540" width="888" height="48" rx="10" fill="#ffffff" stroke="#c9d9e6"/>
+  <text class="tag" x="136" y="562">cli.py</text>
+  <text class="box-body" x="216" y="562">七个子命令 · --json · 退出码 0/1/2/3</text>
+  <text class="box-body" x="216" y="578">render.py 处理 CJK 宽度与表格 · bench.py 生成实例并测量 · demos.py 五个会自我断言的演示</text>
+
+  <!-- 连接线 -->
+  <path class="arrow" d="M310,148 L310,172"/>
+  <path class="arrow" d="M500,216 L514,216"/>
+  <path class="arrow" d="M764,254 L764,280"/>
+  <path class="bus" d="M564,396 L564,414 M260,414 L868,414"/>
+  <path class="arrow" d="M260,414 L260,426"/>
+  <path class="arrow" d="M564,414 L564,426"/>
+  <path class="arrow" d="M868,414 L868,426"/>
+  <path class="arrow" d="M260,506 L260,534"/>
+  <path class="arrow" d="M564,506 L564,534"/>
+  <path class="arrow" d="M868,506 L868,534"/>
+</svg>

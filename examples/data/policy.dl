@@ -1,0 +1,12 @@
+# Role-based access control.  "Denied" is not stored anywhere: it is derived
+# from the absence of a grant, which is why the program needs two strata.
+
+user("ada"). user("bob"). user("cy"). user("dee").
+role("ada", "admin"). role("bob", "dev"). role("cy", "viewer"). role("dee", "viewer").
+resource("prod"). resource("staging"). resource("archive").
+
+can(?u, ?r) :- role(?u, "admin"), resource(?r).
+can(?u, ?r) :- role(?u, "dev"), resource(?r), ?r != "prod".
+can(?u, ?r) :- role(?u, "viewer"), resource(?r), ?r = "archive".
+
+@deny denied(?u, ?r) :- user(?u), resource(?r), not can(?u, ?r).

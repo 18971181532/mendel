@@ -1,0 +1,12 @@
+# A small family tree: five parent edges, one recursive rule.
+
+parent("ada", "bob").
+parent("ada", "cy").
+parent("bob", "dee").
+parent("cy", "eve").
+parent("dee", "fay").
+
+ancestor(?x, ?y) :- parent(?x, ?y).
+@step ancestor(?x, ?z) :- parent(?x, ?y), ancestor(?y, ?z).
+
+sibling(?x, ?y) :- parent(?p, ?x), parent(?p, ?y), ?x != ?y.
