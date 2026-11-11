@@ -15,7 +15,7 @@ import argparse
 import json
 import os
 import sys
-from typing import Dict, Iterable, List, Optional, Sequence, Tuple
+from typing import Dict, List, Optional, Sequence
 
 from . import __version__, bench, demos
 from . import provenance as prov

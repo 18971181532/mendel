@@ -12,7 +12,7 @@ updated in place instead.
 
 from __future__ import annotations
 
-from typing import Dict, Iterable, Iterator, List, Optional, Sequence, Set, Tuple
+from typing import Dict, Iterable, Iterator, List, Sequence, Set, Tuple
 
 from .syntax import Value
 

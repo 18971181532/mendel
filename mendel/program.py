@@ -20,7 +20,7 @@ loops from starting with a full cross product, and its choices are printed by
 from __future__ import annotations
 
 import difflib
-from dataclasses import dataclass, field
+from dataclasses import dataclass
 from typing import Dict, Iterable, List, Optional, Sequence, Set, Tuple
 
 from .syntax import (

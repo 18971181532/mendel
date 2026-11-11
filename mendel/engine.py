@@ -23,10 +23,10 @@ from __future__ import annotations
 
 import time
 from collections import defaultdict
-from dataclasses import dataclass, field
+from dataclasses import dataclass
 from typing import Dict, Iterable, Iterator, List, Optional, Sequence, Set, Tuple
 
-from .program import Program, Stratum
+from .program import Program
 from .relation import Relation
 from .syntax import (
     Atom,

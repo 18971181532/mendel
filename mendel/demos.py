@@ -10,14 +10,13 @@ from __future__ import annotations
 
 import time
 from dataclasses import dataclass
-from typing import List, Optional
+from typing import List
 
 from . import bench
 from . import provenance as prov
 from . import render
 from .engine import Engine
 from .program import Program
-from .syntax import Atom, Const
 
 DEMO_NAMES = ("reach", "why", "incremental", "policy", "bench")
 

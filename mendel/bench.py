@@ -9,8 +9,8 @@ from __future__ import annotations
 
 import random
 import time
-from dataclasses import dataclass, field
-from typing import Dict, List, Optional, Sequence
+from dataclasses import dataclass
+from typing import Dict, List, Sequence
 
 from .engine import Engine
 from .program import Program
